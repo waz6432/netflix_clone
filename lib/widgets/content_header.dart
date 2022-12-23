@@ -128,10 +128,10 @@ class __ContentHeaderDesktopState extends State<_ContentHeaderDesktop> {
         alignment: Alignment.bottomLeft,
         children: [
           AspectRatio(
-            aspectRatio: _videoController.value.initialized
+            aspectRatio: _videoController.value.isInitialized
                 ? _videoController.value.aspectRatio
                 : 2.344,
-            child: _videoController.value.initialized
+            child: _videoController.value.isInitialized
                 ? VideoPlayer(_videoController)
                 : Image.asset(
                     widget.featuredContent.imageUrl,
@@ -143,7 +143,7 @@ class __ContentHeaderDesktopState extends State<_ContentHeaderDesktop> {
             right: 0,
             bottom: -1.0,
             child: AspectRatio(
-              aspectRatio: _videoController.value.initialized
+              aspectRatio: _videoController.value.isInitialized
                   ? _videoController.value.aspectRatio
                   : 2.344,
               child: Container(
@@ -189,11 +189,14 @@ class __ContentHeaderDesktopState extends State<_ContentHeaderDesktop> {
                   children: [
                     _PlayButton(),
                     const SizedBox(width: 16.0),
-                    FlatButton.icon(
-                      padding:
-                          const EdgeInsets.fromLTRB(25.0, 10.0, 30.0, 10.0),
+                    TextButton.icon(
+                      style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.all(Colors.white),
+                        padding: MaterialStatePropertyAll(
+                            const EdgeInsets.fromLTRB(25.0, 10.0, 30.0, 10.0)),
+                      ),
                       onPressed: () => print('More Info'),
-                      color: Colors.white,
                       icon: const Icon(Icons.info_outline, size: 30.0),
                       label: const Text(
                         'More Info',
@@ -204,7 +207,7 @@ class __ContentHeaderDesktopState extends State<_ContentHeaderDesktop> {
                       ),
                     ),
                     const SizedBox(width: 20.0),
-                    if (_videoController.value.initialized)
+                    if (_videoController.value.isInitialized)
                       IconButton(
                         icon: Icon(
                           _isMuted ? Icons.volume_off : Icons.volume_up,
@@ -232,12 +235,16 @@ class __ContentHeaderDesktopState extends State<_ContentHeaderDesktop> {
 class _PlayButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return FlatButton.icon(
-      padding: !Responsive.isDesktop(context)
-          ? const EdgeInsets.fromLTRB(15.0, 5.0, 20.0, 5.0)
-          : const EdgeInsets.fromLTRB(25.0, 10.0, 30.0, 10.0),
+    return TextButton.icon(
+      style: ButtonStyle(
+        backgroundColor: MaterialStateProperty.all(Colors.white),
+        padding: !Responsive.isDesktop(context)
+            ? const MaterialStatePropertyAll(
+                EdgeInsets.fromLTRB(15.0, 5.0, 20.0, 5.0))
+            : const MaterialStatePropertyAll(
+                EdgeInsets.fromLTRB(25.0, 10.0, 30.0, 10.0)),
+      ),
       onPressed: () => print('Play'),
-      color: Colors.white,
       icon: const Icon(Icons.play_arrow, size: 30.0),
       label: const Text(
         'Play',
